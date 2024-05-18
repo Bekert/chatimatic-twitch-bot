@@ -1,0 +1,59 @@
+{
+	"name": "nodejs-template",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"commit": "cz",
+		"pre-commit": "lint-staged",
+		"prettier:check": "prettier --check .",
+		"prettier:fix": "prettier --write .",
+		"eslint:check": "eslint .",
+		"lint": "npm run eslint:check && npm run prettier:check",
+		"lint:fix": "npm run eslint:check && npm run prettier:fix",
+		"prepare": "husky",
+		"start": "node --no-warnings=ExperimentalWarning src/index.js",
+		"dev": "nodemon --no-warnings=ExperimentalWarning src/index.js"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	},
+	"commitlint": {
+		"extends": [
+			"@commitlint/config-conventional"
+		]
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,json,css,html}": "prettier --write",
+		"*.{js,jsx,ts,tsx}": "eslint"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.24.5",
+		"@babel/eslint-parser": "^7.24.5",
+		"@babel/plugin-proposal-json-modules": "^7.24.3",
+		"@commitlint/cli": "^19.3.0",
+		"@commitlint/config-conventional": "^19.2.2",
+		"@eslint/js": "^9.3.0",
+		"commitizen": "^4.3.0",
+		"cz-conventional-changelog": "^3.3.0",
+		"eslint": "^9.3.0",
+		"globals": "^15.2.0",
+		"husky": "^9.0.11",
+		"lint-staged": "^15.2.2",
+		"nodemon": "^3.1.0",
+		"prettier": "^3.2.5"
+	},
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Bekert/nodejs-template"
+	},
+	"author": "Bekert",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Bekert/nodejs-template/issues"
+	},
+	"homepage": "https://github.com/Bekert/nodejs-template"
+}

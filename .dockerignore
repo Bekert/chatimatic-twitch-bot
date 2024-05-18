@@ -1,0 +1,12 @@
+# Folders
+**/dist
+**/node_modules
+.git
+.gitignore
+
+# Files
+**/*.log
+.dockerignore
+Dockerfile
+README.md
+LICENSE
