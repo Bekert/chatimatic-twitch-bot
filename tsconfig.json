@@ -2,7 +2,9 @@
 	"compilerOptions": {
 		"outDir": "./built",
 		"allowJs": true,
-		"target": "es5"
+		"target": "ES2022",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext"
 	},
 	"include": ["./src/**/*"]
 }

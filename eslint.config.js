@@ -4,13 +4,19 @@ import stylistic from '@stylistic/eslint-plugin'
 
 export default tseslint.config(
 	js.configs.recommended,
-	...tseslint.configs.recommended,
+	...tseslint.configs.recommendedTypeChecked,
 	{
-		ignores: ['built/']
+		ignores: ['built/', 'eslint.config.js']
 	},
 	{
 		plugins: {
 			'@stylistic': stylistic
+		},
+		languageOptions: {
+			parserOptions: {
+				project: true,
+				tsconfigRootDir: import.meta.dirname
+			}
 		},
 		rules: {
 			'@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
