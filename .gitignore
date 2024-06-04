@@ -6,3 +6,4 @@ node_modules
 .vscode
 *.eslintcache
 logs
+config.json

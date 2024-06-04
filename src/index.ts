@@ -1,36 +1,54 @@
 import mongoose from 'mongoose'
 import { GPT } from './GPT.js'
 import { Bot } from './Bot.js'
+import { getConfig } from './config.js'
+import { Logger } from './Logger.js'
 
-const gpt = new GPT({
-	apiKey: process.env['OPENAI_API_KEY'],
-	modelType: 'gpt-4',
-	inputsLimit: 2,
-	defaultInputs: ['Тебе звуть Василій. Ти бот донбаського походження']
-})
+const config = await getConfig()
+
+const logger = new Logger()
+logger.logging = config.logs
+
+const gpt = new GPT(
+	{
+		apiKey: config.gpt.apiKey,
+		modelType: config.gpt.modelType,
+		inputsLimit: config.gpt.inputsLimit,
+		defaultInputs: config.gpt.defaultInputs
+	},
+	logger
+)
 const bot = new Bot(
 	{
 		identity: {
-			username: 'muga_maga',
-			password: `oauth:${process.env['TWITCH_API_KEY']}`
+			username: config.twitch.username,
+			password: `oauth:${config.twitch.apiKey}`
 		},
-		channels: ['safrit22']
+		channels: [config.twitch.channel]
 	},
 	{
 		interactions: [
 			{
-				trigger: /^@?muga_maga/gm,
+				trigger: input => /^@?muga_maga/gm.test(input),
 				action: async (user, message) => {
 					const input = /^@?muga_maga(?: |, )(.*)/gm.exec(message)[1]
 
-					const output = await gpt.interact(input, user, true)
+					const output = await gpt.interact(input, user, config.gpt.memory)
 
-					return `@${user} ${output}`
+					const msg = `@${user} ${output}`
+
+					// twitch length limit
+					if (msg.length >= 450) {
+						return [...msg.replace(/\n/gm, ' ').match(/.{1,400}\. /gm)]
+					} else {
+						return msg
+					}
 				}
 			}
 		]
-	}
+	},
+	logger
 )
 
 void bot.connect()
-void mongoose.connect(process.env['DB_URL'])
+void mongoose.connect(config.mongo.url).then(() => logger.msg('MONGO: Connected to DB'))

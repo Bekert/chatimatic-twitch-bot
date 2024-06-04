@@ -1,0 +1,18 @@
+{
+	"twitch": {
+		"apiKey": "",
+		"channel": "",
+		"username": ""
+	},
+	"gpt": {
+		"apiKey": "",
+		"model": "",
+		"defaultInputs": [],
+		"memory": true,
+		"inputsLimit": 4
+	},
+	"mongo": {
+		"url": ""
+	},
+	"logs": true
+}
