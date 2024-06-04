@@ -22,7 +22,9 @@ interface IConfig {
 export async function getConfig() {
 	try {
 		const config: IConfig = {}
-		const { default: data } = (await import('../config.json')) as { default: IConfig }
+		const { default: data } = (await import('../config.json', { with: { type: 'json' } })) as {
+			default: IConfig
+		}
 
 		if (data.twitch) {
 			const apiKey = process.env['TWITCH_API_KEY'] || data.twitch.apiKey

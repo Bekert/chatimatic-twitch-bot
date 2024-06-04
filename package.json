@@ -12,9 +12,9 @@
 		"lint": "npm run eslint:check && npm run prettier:check",
 		"lint:fix": "npm run eslint:check && npm run prettier:fix",
 		"prepare": "husky",
-		"start": "npm run compile && node --env-file=.env built/index.js",
+		"start": "npm run compile && node --env-file=.env built/src/index.js",
 		"dev": "tsx watch --no-warnings=ExperimentalWarning --env-file=.env src/index.ts",
-		"compile": "tsc"
+		"compile": "rm -rf ./built && tsc"
 	},
 	"config": {
 		"commitizen": {
