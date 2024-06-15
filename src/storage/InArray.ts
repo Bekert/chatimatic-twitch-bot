@@ -2,7 +2,7 @@ import { Logger } from '../Logger.js'
 import { SyncStorage } from './index.js'
 
 const DEFAULT_LIMIT = 2
-const DEFAULT_LOG_LABEL = 'Local'
+const DEFAULT_LOG_LABEL = 'Memory storage'
 
 interface InArrayOptions {
 	limit?: number
@@ -18,7 +18,7 @@ export class InArray<Record> implements SyncStorage<Record> {
 		this.records = []
 		this.logger = new Logger({ label: DEFAULT_LOG_LABEL, type: 'storage' })
 
-		this.logger.info('Local array storage initialized')
+		this.logger.info('Memory storage initialized')
 	}
 
 	saveRecords(records: Record[]) {

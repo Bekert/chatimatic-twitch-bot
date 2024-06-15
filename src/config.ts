@@ -14,7 +14,7 @@ interface IConfig {
 		inputsLimit?: number
 		defaultInputs?: string[]
 	}
-	storageType?: 'mongo' | 'local'
+	storageType?: 'mongo' | 'memory' | 'file'
 	mongo?: {
 		url: string
 	}
@@ -75,7 +75,9 @@ export async function getConfig() {
 				} else {
 					throw new Error('MongoDB config is required')
 				}
-			} else if (data.storageType === 'local') {
+			} else if (data.storageType === 'memory') {
+				// no config required
+			} else if (data.storageType === 'file') {
 				// no config required
 			} else {
 				throw new Error('Invalid storage type')

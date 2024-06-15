@@ -11,3 +11,4 @@ export interface SyncStorage<Record> {
 
 export * from './Mongo.js'
 export * from './InArray.js'
+export * from './LowDb.js'

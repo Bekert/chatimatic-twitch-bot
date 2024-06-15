@@ -19,7 +19,12 @@ if (config.aiType === 'gpt') {
 			limit: config.gpt.inputsLimit
 		})
 		await storage.init()
-	} else if (config.storageType === 'local') {
+	} else if (config.storageType === 'file') {
+		storage = new storageManager.LowDb({
+			limit: config.gpt.inputsLimit
+		})
+		await storage.init()
+	} else if (config.storageType === 'memory') {
 		storage = new storageManager.InArray({
 			limit: config.gpt.inputsLimit
 		})

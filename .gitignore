@@ -7,3 +7,4 @@ node_modules
 *.eslintcache
 logs
 config.json
+db.json

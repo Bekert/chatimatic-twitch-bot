@@ -60,6 +60,7 @@
 	},
 	"homepage": "https://github.com/Bekert/chatimatic-twitch-bot",
 	"dependencies": {
+		"lowdb": "^7.0.1",
 		"mongoose": "^8.4.0",
 		"openai": "^4.47.1",
 		"pino": "^9.1.0",
