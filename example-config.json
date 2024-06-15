@@ -8,7 +8,7 @@
 	"gpt": {
 		"apiKey": "",
 		"model": "gpt-4o",
-		"defaultInputs": [],
+		"defaultInputs": ["You are a helpful and funny chat bot in twitch chat"],
 		"memory": true,
 		"inputsLimit": 4
 	},
