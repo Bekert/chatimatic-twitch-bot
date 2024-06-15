@@ -6,7 +6,7 @@ Simple way to run AI chatbots in Twitch chat. Currently works with OpenAI API
 - [X] Add MongoDB support for context storage
 - [X] Add file storage for context
 - [ ] Create TUI
-- [ ] Add support for local models (with [https://github.com/Atome-FE/llama-node])
+- [ ] Add support for local models (with https://github.com/Atome-FE/llama-node)
 - [ ] Create GUI
 
 ## Usage
@@ -46,7 +46,7 @@ Try to ping the bot by username (e. g. `@username hi, who are you?`). It will ke
 Currently GPT is the only supported model. Here is how you can configure it
 
 - `apiKey` - your API key
-- `model` - model to use (e. g. gpt-4o, gpt-4, gpt-3.5-turbo). You can find the full list and pricing here [https://platform.openai.com/docs/models](https://openai.com/api/pricing/)
+- `model` - model to use (e. g. gpt-4o, gpt-4, gpt-3.5-turbo). You can find the full list and pricing here https://openai.com/api/pricing
 - `defaultInputs` - list of default (system) inputs that will be embedded in each request to GPT. I find that 1 short input usually works the best
 - `memory` - whether bot should keep the context of the conversatation (requires additional cost for input tokens)
 - `inputsLimit` - the number of messages (user's inputs and bot's outputs) that will be used in bot's context. Be aware of input token cost cost
