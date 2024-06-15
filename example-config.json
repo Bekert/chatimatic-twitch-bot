@@ -7,13 +7,13 @@
 	"aiType": "gpt",
 	"gpt": {
 		"apiKey": "",
-		"model": "",
+		"model": "gpt-4o",
 		"defaultInputs": [],
 		"memory": true,
 		"inputsLimit": 4
 	},
-	"storageType": "mongo",
+	"storageType": "file",
 	"mongo": {
-		"url": ""
+		"url": "mongodb://127.0.0.1:27017/test"
 	}
 }
