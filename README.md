@@ -1,13 +1,13 @@
 # Chatimatic Twitch BOT (WIP)
 
+Simple way to run AI chatbots in Twitch chat. Currently works with OpenAI API
+
 - [x] Add gpt support
 - [X] Add MongoDB support for context storage
 - [X] Add file storage for context
 - [ ] Create TUI
 - [ ] Add support for local models (with [https://github.com/Atome-FE/llama-node])
-- [ ] Add GUI
-
-Simple way to run AI chatbots in Twitch chat. Currently works with OpenAI API
+- [ ] Create GUI
 
 ## Usage
 
