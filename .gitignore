@@ -8,3 +8,4 @@ node_modules
 logs
 config.json
 db.json
+todo.md

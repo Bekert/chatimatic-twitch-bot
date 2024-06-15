@@ -4,6 +4,7 @@
 		"channel": "",
 		"username": ""
 	},
+	"aiType": "gpt",
 	"gpt": {
 		"apiKey": "",
 		"model": "",
@@ -11,8 +12,8 @@
 		"memory": true,
 		"inputsLimit": 4
 	},
+	"storageType": "mongo",
 	"mongo": {
 		"url": ""
-	},
-	"logs": true
+	}
 }
