@@ -14,52 +14,53 @@ export class Bot {
 	private twitch: Client
 	private logger: Logger
 
-	constructor(tmiOptions: Options, botOptions: IBotOptions, logger: Logger) {
-		this.logger = logger
+	constructor(tmiOptions: Options, botOptions: IBotOptions) {
+		this.logger = new Logger({ label: 'BOT', type: 'twitch' })
 		this.twitch = new Client(tmiOptions)
 
 		this.twitch.on('message', (channel, tags, message, self) => {
 			try {
-				this.logger.msg(`BOT: ${tags.username}: ${message}`)
 				if (self) return
+				this.logger.info(`Message from ${tags.username}: ${message}`)
 
 				for (const { trigger, action } of botOptions.interactions) {
 					void (async () => {
-						this.logger.msg(
-							`BOT: Trigger ${trigger(message) ? 'matched' : 'not matched'}`
-						)
 						if (trigger(message)) {
+							this.logger.info(`Triggered by ${tags.username}`)
 							const output = await action(tags.username, message)
 							if (!output) {
-								this.logger.error('BOT: No output')
+								this.logger.error('No output')
 								return
 							}
 
 							if (Array.isArray(output)) {
-								this.logger.msg(`BOT: Sending ${output.length} messages`)
+								this.logger.info(
+									`Received long output. Splitting into ${output.length} messages`
+								)
 								for (const msg of output) {
+									this.logger.info(`Sending message: ${msg}`)
 									await this.twitch.say(channel, msg)
 									await new Promise(res => setTimeout(res, 3000))
 								}
 							} else {
-								this.logger.msg('BOT: Sending message')
+								this.logger.info(`Sending message: ${output}`)
 								void this.twitch.say(channel, output)
 							}
 						}
 					})()
 				}
 			} catch (error) {
-				this.logger.error(`BOT: ${error}`)
+				this.logger.error(`Failed to process message. ${error}`)
 			}
 		})
 	}
 
-	async connect() {
+	async init() {
 		try {
 			await this.twitch.connect()
-			this.logger.msg('BOT: Connected to Twitch')
+			this.logger.info('Connected to Twitch')
 		} catch (error) {
-			this.logger.error(`BOT: ${error}`)
+			this.logger.error(`Failed to connect to Twitch. ${error}`)
 		}
 	}
 }

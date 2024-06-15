@@ -6,6 +6,7 @@ interface IConfig {
 		channel: string
 		username: string
 	}
+	aiType?: 'gpt'
 	gpt?: {
 		apiKey: string
 		modelType?: OpenAI.Chat.ChatModel
@@ -13,10 +14,10 @@ interface IConfig {
 		inputsLimit?: number
 		defaultInputs?: string[]
 	}
+	storageType?: 'mongo' | 'local'
 	mongo?: {
 		url: string
 	}
-	logs?: boolean
 }
 
 export async function getConfig() {
@@ -40,30 +41,48 @@ export async function getConfig() {
 			throw new Error('Twitch config is required')
 		}
 
-		if (data.gpt) {
-			const apiKey = process.env['OPENAI_API_KEY'] || data.gpt.apiKey
-			if (!apiKey) throw new Error('GPT API key is required')
+		if (data.aiType) {
+			config.aiType = data.aiType
+			if (data.aiType === 'gpt') {
+				if (data.gpt) {
+					const apiKey = process.env['OPENAI_API_KEY'] || data.gpt.apiKey
+					if (!apiKey) throw new Error('GPT API key is required')
 
-			const modelType = data.gpt.modelType || 'gpt-4o'
-			const defaultInputs = data.gpt.defaultInputs || []
-			const memory = data.gpt.memory || false
-			const inputsLimit = data.gpt.inputsLimit || 4
+					const modelType = data.gpt.modelType || 'gpt-4o'
+					const defaultInputs = data.gpt.defaultInputs || []
+					const memory = data.gpt.memory || false
+					const inputsLimit = data.gpt.inputsLimit || 4
 
-			config.gpt = { apiKey, modelType, defaultInputs, memory, inputsLimit }
+					config.gpt = { apiKey, modelType, defaultInputs, memory, inputsLimit }
+				} else {
+					throw new Error('GPT config is required')
+				}
+			} else {
+				throw new Error('Invalid AI type')
+			}
 		} else {
-			throw new Error('GPT config is required')
+			throw new Error('AI type is required')
 		}
 
-		if (data.mongo) {
-			const url = process.env['DB_URL'] || data.mongo.url
-			if (!url) throw new Error('MongoDB URL is required')
+		if (data.storageType) {
+			config.storageType = data.storageType
+			if (data.storageType === 'mongo') {
+				if (data.mongo) {
+					const url = process.env['DB_URL'] || data.mongo.url
+					if (!url) throw new Error('MongoDB URL is required')
 
-			config.mongo = { url }
+					config.mongo = { url }
+				} else {
+					throw new Error('MongoDB config is required')
+				}
+			} else if (data.storageType === 'local') {
+				// no config required
+			} else {
+				throw new Error('Invalid storage type')
+			}
 		} else {
-			throw new Error('MongoDB config is required')
+			throw new Error('Storage type is required')
 		}
-
-		config.logs = data.logs || false
 
 		return config
 	} catch (error) {

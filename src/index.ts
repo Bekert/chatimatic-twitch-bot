@@ -1,23 +1,38 @@
-import mongoose from 'mongoose'
-import { GPT } from './GPT.js'
 import { Bot } from './Bot.js'
 import { getConfig } from './config.js'
-import { Logger } from './Logger.js'
+import * as storageManager from './storage/index.js'
+import * as aiManager from './ai/index.js'
 
 const config = await getConfig()
 
-const logger = new Logger()
-logger.logging = config.logs
+let ai: aiManager.GPT
 
-const gpt = new GPT(
-	{
+if (config.aiType === 'gpt') {
+	let storage:
+		| storageManager.AsyncStorage<aiManager.GptRecord>
+		| storageManager.SyncStorage<aiManager.GptRecord>
+
+	if (config.storageType === 'mongo') {
+		storage = new storageManager.Mongo({
+			url: config.mongo.url,
+			schema: aiManager.gptMongoSchema,
+			limit: config.gpt.inputsLimit
+		})
+		await storage.init()
+	} else if (config.storageType === 'local') {
+		storage = new storageManager.InArray({
+			limit: config.gpt.inputsLimit
+		})
+	}
+
+	ai = new aiManager.GPT({
 		apiKey: config.gpt.apiKey,
 		modelType: config.gpt.modelType,
-		inputsLimit: config.gpt.inputsLimit,
-		defaultInputs: config.gpt.defaultInputs
-	},
-	logger
-)
+		defaultInputs: config.gpt.defaultInputs,
+		storage
+	})
+}
+
 const bot = new Bot(
 	{
 		identity: {
@@ -33,7 +48,7 @@ const bot = new Bot(
 				action: async (user, message) => {
 					const input = /^@?muga_maga(?: |, )(.*)/gm.exec(message)[1]
 
-					const output = await gpt.interact(input, user, config.gpt.memory)
+					const output = await ai.interact(input, user)
 
 					const msg = `@${user} ${output}`
 
@@ -46,9 +61,7 @@ const bot = new Bot(
 				}
 			}
 		]
-	},
-	logger
+	}
 )
 
-void bot.connect()
-void mongoose.connect(config.mongo.url).then(() => logger.msg('MONGO: Connected to DB'))
+void bot.init()

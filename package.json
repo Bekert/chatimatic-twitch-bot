@@ -1,5 +1,5 @@
 {
-	"name": "nodejs-template",
+	"name": "chatimatic-twitch-bot",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -46,23 +46,24 @@
 		"prettier": "^3.2.5",
 		"tsx": "^4.10.5",
 		"typescript": "^5.4.5",
-		"typescript-eslint": "^8.0.0-alpha.13"
+		"typescript-eslint": "^8.0.0-alpha.30"
 	},
 	"type": "module",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Bekert/nodejs-template"
+		"url": "https://github.com/Bekert/chatimatic-twitch-bot"
 	},
 	"author": "Bekert",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/Bekert/nodejs-template/issues"
+		"url": "https://github.com/Bekert/chatimatic-twitch-bot/issues"
 	},
-	"homepage": "https://github.com/Bekert/nodejs-template",
+	"homepage": "https://github.com/Bekert/chatimatic-twitch-bot",
 	"dependencies": {
 		"mongoose": "^8.4.0",
 		"openai": "^4.47.1",
 		"pino": "^9.1.0",
+		"pino-pretty": "^11.2.1",
 		"tmi.js": "^1.8.5"
 	}
 }
