@@ -12,9 +12,11 @@
 		"lint": "npm run eslint:check && npm run prettier:check",
 		"lint:fix": "npm run eslint:check && npm run prettier:fix",
 		"prepare": "husky",
-		"start": "npm run compile && node --env-file=.env built/src/index.js",
-		"dev": "tsx watch --no-warnings=ExperimentalWarning --env-file=.env src/index.ts",
-		"compile": "rm -rf ./built && tsc"
+		"start": "npm run compile && node ./dist/src/index.js",
+		"start-tui": "npm run compile && node ./dist/src/tui/index.js",
+		"dev": "tsx watch --no-warnings=ExperimentalWarning ./src/index.ts",
+		"dev-tui": "tsx watch --no-warnings=ExperimentalWarning ./src/tui/index.ts",
+		"compile": "rm -rf ./dist && tsc"
 	},
 	"config": {
 		"commitizen": {
@@ -35,6 +37,7 @@
 		"@commitlint/config-conventional": "^19.2.2",
 		"@eslint/js": "^9.3.0",
 		"@stylistic/eslint-plugin": "^2.1.0",
+		"@types/react": "^18.3.3",
 		"@types/tmi.js": "^1.8.6",
 		"commitizen": "^4.3.0",
 		"cz-conventional-changelog": "^3.3.0",
@@ -60,11 +63,13 @@
 	},
 	"homepage": "https://github.com/Bekert/chatimatic-twitch-bot",
 	"dependencies": {
+		"ink": "^5.0.1",
 		"lowdb": "^7.0.1",
 		"mongoose": "^8.4.0",
 		"openai": "^4.47.1",
 		"pino": "^9.1.0",
 		"pino-pretty": "^11.2.1",
+		"react": "^18.3.1",
 		"tmi.js": "^1.8.5"
 	}
 }

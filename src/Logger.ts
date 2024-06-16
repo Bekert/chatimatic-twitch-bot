@@ -6,13 +6,14 @@ interface LoggerOptions {
 }
 
 const rootLogger = pino({
-	transport: {
-		target: 'pino-pretty',
-		options: {
-			messageFormat: '({type}) {label}: {msg}',
-			hideObject: true
-		}
-	}
+	base: null
+	// transport: {
+	// 	target: 'pino-pretty',
+	// 	options: {
+	// 		messageFormat: '({type}) {label}: {msg}',
+	// 		hideObject: true
+	// 	}
+	// }
 })
 
 export class Logger {
